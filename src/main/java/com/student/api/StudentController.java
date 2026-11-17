@@ -17,11 +17,14 @@ public class StudentController {
     }
 
     // CREATE - Add a student
-    @PostMapping
-    public Student addStudent(@RequestBody Student student) {
-        student.setId(null);
-        return repository.save(student);
-    }
+    
+@PostMapping
+public Student addStudent(@RequestBody StudentRequest request) {
+    Student student = new Student();
+    student.setName(request.name());
+    student.setEmail(request.email());
+    return repository.save(student);
+}
 
     // READ - Get all students
     @GetMapping
@@ -38,14 +41,15 @@ public class StudentController {
     }
 
     // UPDATE - Update a student
-    @PutMapping("/{id}")
-    public Student updateStudent(@PathVariable Long id,
-                                 @RequestBody Student details) {
-        Student student = getStudent(id);
-        student.setName(details.getName());
-        student.setEmail(details.getEmail());
-        return repository.save(student);
-    }
+    
+@PutMapping("/{id}")
+public Student updateStudent(@PathVariable Long id,
+                             @RequestBody StudentRequest details) {
+    Student student = getStudent(id);
+    student.setName(details.name());
+    student.setEmail(details.email());
+    return repository.save(student);
+}
 
     // DELETE - Delete a student
     @DeleteMapping("/{id}")
